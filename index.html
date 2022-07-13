@@ -215,7 +215,7 @@ git
         }
 
         function generateSites() {
-            console.log(textArea.value)
+            track()
             textArea.innerHTML = ""
             list = []
             sites = shuffle(sites)
@@ -257,6 +257,11 @@ git
             const toast = new bootstrap.Toast(toastLiveExample)
 
             toast.show()
+        }
+
+        function track() {
+            gtag('event', 'click_generate', {});
+            console.log("track")
         }
 
         document.addEventListener('contextmenu', (e) => { e.preventDefault(); }
