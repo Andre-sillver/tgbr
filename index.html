@@ -31,7 +31,7 @@ git
             <input type="range" class="form-range me-3" min="1" max="100" value="10" id="range" style="width: 300px;"
                 onchange="getVal()">
             <span id="textValue" class="align-middle me-3" style="font-size: 26px;">10</span>
-            <button id="btnGenerate" class="btn btn-primary" onclick="generateSites()">Gerar</button>
+            <button id="btnGenerate" class="btn btn-primary" onclick="generateSites(); trackGenerate()">Gerar</button>
         </div>
 
         <div class="card mt-3 pt-4 p-4 mb-4">
@@ -39,9 +39,9 @@ git
             <textarea class="form-control bg-light" id="textAreaList" rows="10"></textarea>
         </div>
 
-        <button id="btnOpen" class="btn btn-primary" onclick="openUrls()">Abrir Sites</button>
-        <button id="btnCopy" class="btn btn-secondary" onclick="copyUrls()">Copiar </button><br>
-        <button id="btnCopy" class="btn btn-link p-0 mt-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">As
+        <button id="btnOpen" class="btn btn-primary" onclick="openUrls(); trackOpen()">Abrir Sites</button>
+        <button id="btnCopy" class="btn btn-secondary" onclick="copyUrls(); trackCopy()">Copiar </button><br>
+        <button id="btnCopy" class="btn btn-link p-0 mt-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="trackHelp()">As
             URLs não estão abrindo? Clique aqui para obter ajuda </button>
     </section>
 
@@ -58,9 +58,9 @@ git
     </div>
 
     <section class="container rounded-3 p-5 mb-3" style="background-color: white">
-        <a class="btn btn-dark mt-1" href="https://forms.gle/gRQSFDnkZfmG9VKS9" target="_blank">Sugerir Site</a>
-        <a class="btn btn-dark mt-1" href="https://forms.gle/ciyXJV3HUoUWaF3t6" target="_blank"> Reportar Erro</a>
-        <a class="btn btn-dark mt-1" href="https://forms.gle/zhePCEntUBJBC9QJ9" target="_blank"> Sugerir Melhoria</a>
+        <a class="btn btn-dark mt-1" href="https://forms.gle/gRQSFDnkZfmG9VKS9" target="_blank" onclick="trackSiteSugestion()">Sugerir Site</a>
+        <a class="btn btn-dark mt-1" href="https://forms.gle/ciyXJV3HUoUWaF3t6" target="_blank" onclick="trackReportError()"> Reportar Erro</a>
+        <a class="btn btn-dark mt-1" href="https://forms.gle/zhePCEntUBJBC9QJ9" target="_blank" onclick="trackUpdateSugestion()"> Sugerir Melhoria</a>
 
     </section>
 
@@ -215,7 +215,6 @@ git
         }
 
         function generateSites() {
-            track()
             textArea.innerHTML = ""
             list = []
             sites = shuffle(sites)
@@ -259,9 +258,32 @@ git
             toast.show()
         }
 
-        function track() {
-            gtag('event', 'click_generate', {});
-            console.log("track")
+        function trackGenerate() {
+            gtag('event', 'click_generate');
+        }
+
+        function trackCopy() {
+            gtag('event', 'click_copy_sites');
+        }
+
+        function trackHelp() {
+            gtag('event', 'click_help');
+        }
+
+        function trackOpen() {
+            gtag('event', 'click_open_sites');
+        }
+
+        function trackSiteSugestion() {
+            gtag('event', 'click_site_sugestion');
+        }
+
+        function trackReportError() {
+            gtag('event', 'click_report_error');
+        }
+
+        function trackUpdateSugestion() {
+            gtag('event', 'click_update_sugestion');
         }
 
         document.addEventListener('contextmenu', (e) => { e.preventDefault(); }
