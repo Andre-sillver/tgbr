@@ -1,0 +1,274 @@
+git<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Sites Generator - Brasil</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+
+<body class="bg-dark">
+    <section class="container rounded-3 p-5 pt-4 mb-3" style="background-color: white">
+        <h1 class="m-1 text-center"> Top Sites Generator - Brasil </h1>
+        <h6 class="text-center"> Gere sites e abra todos aqui mesmo </h6>
+
+        
+        <div class="d-lg-inline-flex align-items-center mt-5 ">
+            <input type="range" class="form-range me-3" min="1" max="100" value="10" id="range" style="width: 300px;"
+                onchange="getVal()">
+            <span id="textValue" class="align-middle me-3" style="font-size: 26px;">10</span>
+            <button id="btnGenerate" class="btn btn-primary" onclick="generateSites()">Gerar</button>
+        </div>
+
+        <div class="card mt-3 pt-4 p-4 mb-4">
+            <label for="textAreaList" class="form-label">Lista de sites</label>
+            <textarea class="form-control bg-light" id="textAreaList" rows="10"></textarea>
+        </div>
+
+        <button id="btnOpen" class="btn btn-primary" onclick="openUrls()">Abrir Sites</button>
+        <button id="btnCopy" class="btn btn-secondary" onclick="copyUrls()">Copiar </button><br>
+        <button id="btnCopy" class="btn btn-link p-0 mt-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">As
+            URLs não estão abrindo? Clique aqui para obter ajuda </button>
+    </section>
+
+    <div class="toast-container  position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast text-bg-success" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Sites copiados
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <section class="container rounded-3 p-5 mb-3" style="background-color: white">
+        <a class="btn btn-dark" href="https://forms.gle/gRQSFDnkZfmG9VKS9" target="_blank">Sugerir Site</a>
+        <a class="btn btn-dark" href="https://forms.gle/ciyXJV3HUoUWaF3t6" target="_blank"> Reportar Erro</a>
+        <a class="btn btn-dark" href="https://forms.gle/zhePCEntUBJBC9QJ9" target="_blank"> Sugerir Melhoria</a>
+
+    </section>
+
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">As urls não estão abrindo? Vamos te ajudar! </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Se as URLs não abrirem, isso significa que os pop-ups estão bloqueados no seu navegador.
+                        Confira abaixo as instruções para desativar bloqueadores de pop-up.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok agora vai dar
+                        certo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var sites = [
+            "https://www.mercadolivre.com.br/",
+            "https://www.magazineluiza.com.br/",
+            "https://www.amazon.com.br/",
+            "https://www.shoptime.com.br/",
+            "https://www.submarino.com.br/",
+            "https://www.casasbahia.com.br/",
+            "https://www.americanas.com.br/",
+            "https://www.madeiramadeira.com.br/",
+            "https://www.pontofrio.com.br/",
+            "https://www.extra.com.br/",
+            "https://www.havan.com.br/",
+            "https://www.centauro.com.br/",
+            "https://www.netshoes.com.br/",
+            "https://www.wish.com/br",
+            "https://www.kanui.com.br",
+            "http://kabum.com.br",
+            "https://www.dafiti.com.br/",
+            "https://querobolsa.com.br/faculdades-e-universidades",
+            "https://www.educamaisbrasil.com.br/",
+            "https://descomplica.com.br/faculdade/",
+            "https://estacio.br/",
+            "https://loja.anhembionline.com.br/",
+            "https://loja.usjt.br/",
+            "https://www.uninove.br/",
+            "https://www.fiap.com.br/",
+            "https://www.unip.br/",
+            "https://portal.fmu.br/",
+            "https://portal.fgv.br/",
+            "https://brasilescola.uol.com.br/",
+            "https://www.grancursosonline.com.br/",
+            "https://www.pciconcursos.com.br/",
+            "https://mundoeducacao.uol.com.br/",
+            "http://passeidireto.com",
+            "https://www.senac.br/",
+            "https://sp.senai.br/",
+            "https://sebrae.com.br/",
+            "https://www.uninter.com/",
+            "http://cruzeirodosul.edu.br",
+            "https://www.estrategiaconcursos.com.br/",
+            "https://veja.abril.com.br/",
+            "https://br.noticias.yahoo.com/",
+            "https://www.cnnbrasil.com.br/",
+            "https://www.terra.com.br/noticias/",
+            "https://noticias.uol.com.br/",
+            "https://www.globo.com/",
+            "https://g1.globo.com/",
+            "https://olhardigital.com.br/",
+            "https://www.tecmundo.com.br/",
+            "http://estadao.com.br",
+            "https://www.r7.com/",
+            "http://concursosnobrasil.com.br",
+            "https://www.crunchyroll.com",
+            "https://www.funimation.com/pt-br/",
+            "https://www.filmelier.com/br",
+            "https://www.adorocinema.com/vod/",
+            "https://www.netmovies.com.br/",
+            "https://www.looke.com.br/home",
+            "https://www.fandom.com/",
+            "https://www.gov.br",
+            "http://poupatempo.sp.gov.br",
+            "https://www.marinha.mil.br",
+            "https://corretora.clear.com.br/",
+            "https://www.rico.com.vc/",
+            "https://www.xpi.com.br/",
+            "https://www.itau.com.br/",
+            "https://banco.bradesco/html/classic/index.shtm",
+            "https://www.caixa.gov.br/Paginas/home-caixa.aspx",
+            "https://www.bb.com.br/",
+            "https://www.investing.com/",
+            "http://bancointer.com.br",
+            "https://www.ilovepdf.com/pt",
+            "https://smallpdf.com/pt/conversor-de-pdf",
+            "https://www.sodapdf.com/",
+            "https://www.cifraclub.com.br/",
+            "https://www.catho.com.br/",
+            "http://todamulher.com.br",
+            "https://www.tudogostoso.com.br/",
+            "https://receitas.globo.com/",
+            "https://www.eduzz.com/",
+            "https://www.voegol.com.br",
+            "https://www.voeazul.com.br/",
+            "https://www.latamairlines.com/br/pt",
+            "https://www.qatarairways.com/pt-br",
+            "https://www.decolar.com/",
+            "https://hotmart.com/pt-br",
+            "https://perfectpay.com.br/",
+            "http://guiamais.com.br",
+            "https://www.baixaki.com.br/",
+            "https://www.maiscelular.com.br/",
+            "https://www.clickjogos.com.br/",
+            "https://www.olx.com.br/",
+            "http://cobasi.com.br",
+            "http://buscape.com.br",
+            "http://webmotors.com.br",
+            "http://santander.com.br",
+            "http://jusbrasil.com.br",
+            "https://www.pichau.com.br/",
+            "http://campograndenews.com.br",
+            "https://www.metropoles.com/",
+            "http://estantevirtual.com.br",
+            "https://www.tim.com.br/",
+            "https://www.sbtnews.com.br/"
+        ]
+
+        var size = 0
+        var span = document.querySelector("#textValue")
+        var range = document.querySelector("#range")
+        var btnGenerate = document.querySelector("#btnGenerate")
+        var textArea = document.getElementById("textAreaList")
+        var list = []
+
+        function getVal() {
+            size = range.value
+            span.innerHTML = size
+        }
+
+        function generateSites() {
+            console.log(textArea.value)
+            textArea.innerHTML = ""
+            list = []
+            sites = shuffle(sites)
+            getVal()
+            for (let i = 0; i < size; i++) {
+                list.push(sites[i])
+                textArea.append(sites[i] + "\n")
+            }
+        }
+
+        function openUrls() {
+            for (let i = 0; i < list.length; i++) {
+                window.open(list[i])
+            }
+        }
+
+        function copyUrls() {
+
+            /* Select the text field */
+            textArea.select();
+            textArea.setSelectionRange(0, 99999); /* For mobile devices */
+
+            /* Copy the text inside the text field */
+            navigator.clipboard.writeText(textArea.value);
+
+            /* Alert the copied text */
+
+            showToast()
+        }
+
+        function shuffle(a) {
+            var j, x, i;
+            for (i = a.length - 1; i > 0; i--) {
+                j = Math.floor(Math.random() * (i + 1));
+                x = a[i];
+                a[i] = a[j];
+                a[j] = x;
+            }
+            return a;
+        }
+
+
+        function showToast() {
+            const toastLiveExample = document.getElementById('liveToast')
+            const toast = new bootstrap.Toast(toastLiveExample)
+
+            toast.show()
+        }
+
+
+        /*
+        document.addEventListener('contextmenu', (e) => { e.preventDefault(); }
+        );
+        document.onkeydown = function (e) {
+            if (event.keyCode == 123) {
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) {
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
+                return false;
+            }
+            if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
+                return false;
+            } 
+        }*/
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
